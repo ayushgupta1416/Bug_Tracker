@@ -1,9 +1,9 @@
 const router = require('express').Router();
 
 
-
+const verify = require('../middleware/verifyToken')
 // get all bugs
-router.get("/bug",async(req, res) => {
+router.get('/', verify, (req, res) => {
     res.status(200).json(
       {
         bugs: [{

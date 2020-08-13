@@ -10,8 +10,9 @@ const { User, validateUser, validateUserLogin } = require('../models/user');
 router.post('/signup', async (req, res) => {
   // Validate request body
   const { error, value } = validateUser(req.body);
-  if (error) return res.status(400).json(error.details[0].message);
+  if (error) return res.status(400).json({error:error.details[0].message});
   const slugifiedUsername = slugify(value.name, { lower: true, })
+
   try {
     // check for existing email/user
     // TODO check for user/email exist and update usernames
@@ -32,7 +33,7 @@ router.post('/signup', async (req, res) => {
     const savedUser = await newUser.save();
     res.json({ msg: "User Registered", _id: savedUser._id });
   } catch (err) {
-    res.json({ error: 'something went wrong' })
+    res.status(404).json({ error: 'something went wrong' })
     throw new Error(err);
   }
 })
@@ -41,17 +42,17 @@ router.post('/signup', async (req, res) => {
 router.post("/login", async (req, res) => {
   // Validate request body
   const { error, value } = validateUserLogin(req.body);
-  if (error) return res.status(400).send(error.details[0].message);
+  if (error) return res.status(400).json({error: error.details[0].message});
 
 
   try {
     // check if user exist
     const user = await User.findOne({ email: value.email });
-    if (!user) return res.status(400).send("Email does not exsist");
+    if (!user) return res.status(400).json({error: "Email does not exsist"});
 
     // Check/Compares password
     const validPassword = await bcrypt.compare(value.password, user.password);
-    if (!validPassword) return res.status(401).send("Password is incorrect");
+    if (!validPassword) return res.status(401).json({error:"Password is incorrect"});
 
     // Create JWT Token
     const token = jwt.sign({
