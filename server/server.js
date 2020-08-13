@@ -8,7 +8,7 @@ const cors = require('cors');
 const PORT = 5000;
 
 const auth = require('./routes/auth');
-//const bugs = require('./routes/bugs');
+const bugs = require('./routes/bugs');
 
 
 
@@ -21,6 +21,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use('/api/user', auth);
+app.use('/api/bugs', bugs);
 
 
 
