@@ -2,6 +2,32 @@ const mongoose = require('mongoose');
 const Joi = require('@hapi/joi');
 const bcrypt = require('bcryptjs');
 
+const UserInfoSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+    trim: true,
+    minlength: 6,
+    maxlength: 100
+  },
+  username: {
+    type: String,
+    required: true,
+    trim: true,
+    unique: true,
+    minlength: 6,
+    maxlength: 100,
+  },
+})
+
+UserInfoSchema.set('toJSON', {
+  transform: function (doc, ret, options) {
+    ret.id = ret._id;
+    delete ret._id;
+    delete ret.__v;
+  }
+});
+
 const UserSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -62,5 +88,7 @@ const validateUserLogin = (user) => {
 }
 
 module.exports.User = User;
+module.exports.UserSchema = UserSchema;
+module.exports.UserInfoSchema = UserInfoSchema;
 module.exports.validateUser = validateUser;
 module.exports.validateUserLogin = validateUserLogin; 
