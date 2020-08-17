@@ -1,17 +1,23 @@
 const router = require('express').Router();
+const verify = require('../middleware/verify')
 
 
-const verify = require('../middleware/verifyToken')
-// get all bugs
-router.get('/', verify, (req, res) => {
-    res.status(200).json(
-      {
-        bugs: [{
-          title: 'Not working',
-          desciption: 'hell world'
-        }]
-      }
-    )
-  })
-  
-  module.exports = router; 
+
+const Bug = require('../controllers/Bug')
+
+
+
+router.get('/', verify, Bug.getBugs)
+router.get('/:id', verify, Bug.getBugByNumber)
+router.post('/', verify, Bug.createBug)
+
+
+router.put('/:id/close', verify, Bug.toggleBugOpenClose({ state: false }))
+router.put('/:id/open', verify, Bug.toggleBugOpenClose({ state: true }))
+
+
+router.put('/:id/labels', Bug.addLabel)
+router.delete('/:id/labels/:name', Bug.deleteLabel)
+
+
+module.exports = router; 
