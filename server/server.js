@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const httpResponder = require('./middleware/responder');
 
 const PORT = 5000;
 
@@ -21,6 +22,7 @@ mongoose.connect(process.env.DB_CONNECT, { useNewUrlParser: true, useUnifiedTopo
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(httpResponder);
 
 app.use('/api/user', user);
 app.use('/api/bugs', bugs);

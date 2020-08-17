@@ -1,16 +1,17 @@
 const { Bug } = require('../models/bugs');
 const { validateComment } = require('../models/comment');
+const { NOTIFY_TYPES } = require('../constants');
 
 //GET all comments with a specified bugId
 
 exports.getComments = async (req, res) => {
     try {
       const { comments } = await Bug.findOne({ bugId: req.params.bugId })
-      if (!comments) return res.notFound({ error: 'Not Found' })
+      if (!comments) res.notFound({ error: `Bug#${req.params.bugId} Not Found` });
   
       res.ok(comments);
     } catch (err) {
-      res.internalError({
+      res.status(INTERNAL_ERROR)({
         message: 'Something went wrong while getting comments',
         error: err
       })

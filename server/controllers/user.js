@@ -6,7 +6,7 @@ const { User, validateUser, validateUserLogin } = require('../models/user');
 
 exports.signup = async (req, res) => {
     const { error, value } = validateUser(req.body);
-    if (error) return res.status(400).json({ error: error.details[0].message });
+    if (error) return res.unprocessable({ error: error.details[0].message });
 
 
 
