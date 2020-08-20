@@ -14,9 +14,9 @@ const StyledButton = styled.button<ButtonProps & React.HTMLAttributes<HTMLDivEle
   padding: 10px 15px;
   margin: 10px auto;
   cursor: pointer;
-  transition: 0.2s;
+  transition: 0.1s;
   &:hover {
-    transform: scale(1.05);
+    transform: scale(1.09);
     transition: 0.2s;
   }
 `

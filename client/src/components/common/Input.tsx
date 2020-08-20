@@ -16,6 +16,11 @@ const InputLabel = styled.label`
   padding: 5px;
   padding: 0 20px;
   height: 40px;
+  transition: 0.1s;
+  &:hover {
+    transform: scale(1.02);
+    transition: 0.2s;
+  }
   color: ${p => p.theme.colors.text.black};
   span {
     margin-right: 10px;
@@ -29,6 +34,7 @@ const StyledInput = styled.input`
   border: none;
   background: none;
   outline: none;
+  
   &:focus + span {
     border-radius: 50px;
     color: ${p => p.theme.colors.brand.primary} !important;

@@ -5,6 +5,10 @@ import Login from './components/Login/Login';
 import theme from './@bug-ui/theme';
 import GlobalStyles from './styles/globalStyles';
 import Home from './pages/Home/Home';
+import { library } from '@fortawesome/fontawesome-svg-core'
+import {faEnvelope,faLock } from '@fortawesome/free-solid-svg-icons'
+
+library.add(faEnvelope,faLock);
 
 const App: React.FC = () => {
   return (
